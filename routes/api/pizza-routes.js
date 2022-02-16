@@ -21,6 +21,7 @@ router.route("/").get(getAllPizza).post(createPizza);
 router.route("/:id").get(getPizzaById).put(updatePizza).delete(deletePizza);
 
 module.exports = router;
+//routes are exported to the ./api/index.js
 
 /*This is a new Express.js Router setup which instead of creating duplicate routes for the individual HTTP methods, we can combine them. The following variations achieve the same goal:
 
