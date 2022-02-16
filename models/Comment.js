@@ -1,5 +1,6 @@
-//import dependenices for mongoose
+//import dependenices for mongoose and importing getter function 
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 //model schema for the data to be stored
 /*See notes in Pizza.js regarding model contruction.
@@ -14,7 +15,15 @@ const CommentSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+    /*Using a getter to format time, the function is in the utils folder and was exported so it needs to be imported in this file*/
+    get: (createdAtVal) => dateFormat(createdAtVal),
   },
+//   toJSON: {
+//       virtuals: true,
+//       getters: true,
+//     },
+//     id: false,
+//   },
 });
 
 //Create the Comment Model using the CommentSchema
