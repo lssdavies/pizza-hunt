@@ -31,6 +31,7 @@ function getPizza() {
       console.log(err);
       alert("Cannot find a pizza with this id! Taking you back.");
       window.history.back();
+      /*The window history API exposes methods that let us control the state of the browser's session. As long as this particular browser session has a previous page, it will behave as if the user had clicked on the "Back" button.*/
     });
 }
 
@@ -125,6 +126,28 @@ function handleNewCommentSubmit(event) {
   }
 
   const formData = { commentBody, writtenBy };
+  /*this is the post action for new comments for some reason the editor doesnt like the code once it is inserted into the function but no error when the server starts and I am able to post comments*/
+  fetch(`/api/comments/${pizzaId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+      response.json();
+    })
+    .then((commentResponse) => {
+      console.log(commentResponse);
+      location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function handleNewReplySubmit(event) {
@@ -144,6 +167,27 @@ function handleNewReplySubmit(event) {
   }
 
   const formData = { writtenBy, replyBody };
+  fetch(`/api/comments/${pizzaId}/${commentId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+      response.json();
+    })
+    .then((commentResponse) => {
+      console.log(commentResponse);
+      location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 $backBtn.addEventListener("click", function () {
