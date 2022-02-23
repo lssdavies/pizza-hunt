@@ -31,7 +31,7 @@ const commentController = {
       //mongoDB operator $push to push the reply to the comment
       { $push: { replies: body } },
       //the new: true returns the change
-      { new: true }
+      { new: true, runValidators: true }
     )
       .then((dbPizzaData) => {
         if (!dbPizzaData) {

@@ -14,9 +14,14 @@ const ReplySchema = new Schema(
     },
     replyBody: {
       type: String,
+      required: true,
+      trim: true,
+      /*added required and trim for validation, required means data must be added and trim will remove the white space. in the required value you can add a customer message i.e 'Please add a comment' in place of true*/
     },
     writtenBy: {
       type: String,
+      required: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
@@ -35,9 +40,14 @@ const CommentSchema = new Schema(
   {
     writtenBy: {
       type: String,
+      required: true,
+      trim: true,
     },
     commentBody: {
       type: String,
+      required: true,
+      trim: true,
+      /*added required and trim for validation, required means data must be added and trim will remove the white space. in the required value you can add a customer message i.e 'Please add a comment' in place of true*/
     },
     createdAt: {
       type: Date,

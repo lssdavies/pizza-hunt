@@ -7,9 +7,14 @@ const PizzaSchema = new Schema(
   {
     pizzaName: {
       type: String,
+      required: true,
+      trim: true,
+      /*added required and trim for validation, required means data must be added and trim will remove the white space. in the required value you can add a customer message i.e 'Please add a pizza name' in place of true*/
     },
     createdBy: {
       type: String,
+      required: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
@@ -19,6 +24,9 @@ const PizzaSchema = new Schema(
     },
     size: {
       type: String,
+      required: true,
+      enum: ["Personal", "Small", "Medium", "Large", "Extra Large"],
+      /**enum option stands for enumerable, we provide an array of options that this size field will accept, if the user enter something beyond the expected option validation will fail*/
       default: "Large",
     },
     toppings: [],
@@ -41,7 +49,10 @@ const PizzaSchema = new Schema(
 );
 // get total count of comments and replies on retrieval using virtuals. The reduce() is to tally up the total of every comment with its replies. .reduce() takes two parameters, an accumulator and a currentValue ie. (total, comment). As .reduce() goes through the array, it passes the accumulating total and the current value of comment into the function, with the return of the function revising the total for the next iteration through the array. */
 PizzaSchema.virtual("commentCount").get(function () {
-  return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
+  return this.comments.reduce(
+    (total, comment) => total + comment.replies.length + 1,
+    0
+  );
 });
 
 /*Similar to sequelize we create a schema using the schema constructor imported from mongoose at line 1. We dont have to define the fields as mongodb will allow the data anyway but we should regulate what the data will look like. The type field uses JavaScript data types, notice the [] to indicate an array for toppings but you could also specify Array instead of using the brackets. In the createAt field if the user doesnt enter data the date.now function execute and provide a timestamp.*/
